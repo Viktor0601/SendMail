@@ -100,11 +100,7 @@ public class SendMail {
 			props.setSubject(prefs.get(SUBJECT, EMPTY));
 			props.setBodyText(prefs.get(BODYTEXT, EMPTY));
 			props.setBodyFile(prefs.get(BODYFILE, EMPTY));
-			if (props.getBodyFile().toLowerCase().contains(".htm")) { 
-				props.setMimeType(prefs.get(MIMETYPE, MIMETYPEHTML));
-			} else {
-				props.setMimeType(prefs.get(MIMETYPE, MIMETYPETEXT));
-			}
+			props.setMimeType(prefs.get(MIMETYPE, EMPTY));
 			props.setRecipients(prefs.get(RECIPIENTS, null));
 			props.setAttachments(prefs.get(ATTACHEMENTS, EMPTY));
 
@@ -162,6 +158,7 @@ public class SendMail {
 					props.setBodyText(args[i++ + 1]);
 				} else if (args[i].equals("-f")) {
 					props.setBodyFile(args[i++ + 1]);
+					setFinalMimetype();
 				} else if (args[i].equals("-a")) {
 					props.setAttachments(args[i++ + 1]);
 				} else if (args[i].equals("-v")) {
@@ -214,9 +211,19 @@ public class SendMail {
 		log("Mail body text:      " + props.getBodyText());
 		log("Mail body textfile : " + props.getBodyFile());
 		log("Mime type:           " + props.getMimeType());
-		log("Attachment(s):       " + props.getAttachmentsAsArray().length + " (" + props.getAttachments() + ")");
-		log("Recipient(s):        " + props.getRecipientsAsArray().length + " (" + props.getRecipients() + ")");
+		log("Attachment(s):       " + "[" + props.getAttachments() + "]");
+		log("Recipient(s):        " + "[" + props.getRecipients() + "]");
 		log("Test run only:       " + testmode + "\n");
+	}
+
+	private static void setFinalMimetype() {
+		if (props.getMimeType().isBlank()) {
+			if (props.getBodyFile().toLowerCase().contains(".htm")) { 
+				props.setMimeType(MIMETYPEHTML);
+			} else {
+				props.setMimeType(MIMETYPETEXT);
+			}
+		}
 	}
 
 	private static void sendMail() {

@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.vkeimes</groupId>
 	<artifactId>sendmail</artifactId>
-	<version>2.3.1</version>
+	<version>2.3.2</version>
 	<name>SendMail</name>
 
 	<properties>
@@ -17,49 +17,49 @@
 	</properties>
 
 	<dependencies>
-        <dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>jakarta.mail</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.mail</groupId>
-            <artifactId>jakarta.mail-api</artifactId>
-            <version>2.0.1</version>
-        </dependency>
 		<dependency>
-		    <groupId>org.ini4j</groupId>
-		    <artifactId>ini4j</artifactId>
-		    <version>0.5.4</version>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>jakarta.mail</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.mail</groupId>
+			<artifactId>jakarta.mail-api</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ini4j</groupId>
+			<artifactId>ini4j</artifactId>
+			<version>0.5.4</version>
 		</dependency>
 	</dependencies>
 
 	<build>
-	    <plugins>
-	        <plugin>
-	            <artifactId>maven-assembly-plugin</artifactId>
-	            <version>2.4.1</version>
-	            <configuration>
-	                <descriptorRefs>
-	                    <descriptorRef>jar-with-dependencies</descriptorRef>
-	                </descriptorRefs>
-	                <archive>
-	                    <manifest>
-	                        <mainClass>de.vkeimes.SendMail</mainClass>
-	                    </manifest>
-	                </archive>
-	            </configuration>
-	            <executions>
-	                <execution>
-	                    <id>make-assembly</id>
-	                    <phase>package</phase> 
-	                    <goals>
-	                        <goal>single</goal>
-	                    </goals>
-	                </execution>
-	            </executions>
-	        </plugin>
-	    </plugins>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>de.vkeimes.sendmail.SendMail</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 
 </project>

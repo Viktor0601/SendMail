@@ -74,8 +74,8 @@ public class Mailer {
             		StringBuffer sbFile_Data = new StringBuffer();
             		AsciiReader tmpReader = new AsciiReader(props.getBodyFile());
             		sbFile_Data = tmpReader.getDataAsStringBuffer();
-            		messageBodyPart.setDataHandler(new DataHandler(new ByteArrayDataSource(sbFile_Data.toString()
-            				+ sbFile_Data.toString(), props.getMimeType())));
+            		messageBodyPart.setDataHandler(new DataHandler(new ByteArrayDataSource(
+            				sbFile_Data.toString(), props.getMimeType())));
             	} else {
             		fileNotFoundWarning(props.getBodyFile());
             	}
@@ -84,9 +84,9 @@ public class Mailer {
 
             // Anhänge erstellen
             String[] atts = props.getAttachmentsAsArray();
-            if (atts.length > 0) {
-	            MimeBodyPart[] attachmentParts = new MimeBodyPart[atts.length];
-	            for (int i = 0; i < atts.length; i++) {
+            MimeBodyPart[] attachmentParts = new MimeBodyPart[atts.length];
+            for (int i = 0; i < atts.length; i++) {
+            	if ( !atts[i].isBlank() ) {
 	            	String attName = atts[i].trim();
 	            	File att = new File(attName);
 	            	if (att.exists()) {
@@ -96,7 +96,7 @@ public class Mailer {
 	            	} else {
 	            		fileNotFoundWarning(attName);
 	            	}
-	            }
+            	}
             }
 
             // Alle Teile als Content setzen...
