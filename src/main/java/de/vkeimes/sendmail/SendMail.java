@@ -26,6 +26,8 @@ public class SendMail {
 	static String BODYFILE = "bodyfile";
 	static String MIMETYPE = "mimetype";
 	static String RECIPIENTS = "recipients";
+	static String RECIPIENTSCC = "recipientscc";
+	static String RECIPIENTSBCC = "recipientsbcc";
 	static String ATTACHEMENTS = "attachments";
 
 	// Defaultwerte
@@ -102,6 +104,8 @@ public class SendMail {
 			props.setBodyFile(prefs.get(BODYFILE, EMPTY));
 			props.setMimeType(prefs.get(MIMETYPE, EMPTY));
 			props.setRecipients(prefs.get(RECIPIENTS, null));
+			props.setRecipientsCc(prefs.get(RECIPIENTSCC, EMPTY));
+			props.setRecipientsBcc(prefs.get(RECIPIENTSBCC, EMPTY));
 			props.setAttachments(prefs.get(ATTACHEMENTS, EMPTY));
 
 		} catch (IOException e) {
@@ -128,6 +132,8 @@ public class SendMail {
 		if (System.getenv(BODYFILE) != null) { props.setBodyFile(System.getenv(BODYFILE)); }
 		if (System.getenv(MIMETYPE) != null) { props.setMimeType(System.getenv(MIMETYPE)); }
 		if (System.getenv(RECIPIENTS) != null) { props.setRecipients(System.getenv(RECIPIENTS)); }
+		if (System.getenv(RECIPIENTSCC) != null) { props.setRecipientsCc(System.getenv(RECIPIENTSCC)); }
+		if (System.getenv(RECIPIENTSBCC) != null) { props.setRecipientsBcc(System.getenv(RECIPIENTSBCC)); }
 		if (System.getenv(ATTACHEMENTS) != null) { props.setAttachments(System.getenv(ATTACHEMENTS)); }
 	}
 
@@ -152,6 +158,10 @@ public class SendMail {
 					encryptPassword(args[i++ + 1]);
 				} else if (args[i].equals("-r")) {
 					props.setRecipients(args[i++ + 1]);
+				} else if (args[i].equals("-rc")) {
+					props.setRecipientsCc(args[i++ + 1]);
+				} else if (args[i].equals("-rb")) {
+					props.setRecipientsBcc(args[i++ + 1]);
 				} else if (args[i].equals("-s")) {
 					props.setSubject(args[i++ + 1]);
 				} else if (args[i].equals("-b")) {
@@ -213,6 +223,8 @@ public class SendMail {
 		log("Mime type:           " + props.getMimeType());
 		log("Attachment(s):       " + "[" + props.getAttachments() + "]");
 		log("Recipient(s):        " + "[" + props.getRecipients() + "]");
+		log("Recipient(s) CC:     " + "[" + props.getRecipientsCc() + "]");
+		log("Recipient(s) BCC:    " + "[" + props.getRecipientsBcc() + "]");
 		log("Test run only:       " + testmode + "\n");
 	}
 
@@ -246,16 +258,18 @@ public class SendMail {
 	private static void usageAndEnd(int exitcode) {
  		System.err.println("Usage: java SendMail\n\n"
  				+ "Program arguments:\n"
- 				+ "-r Recipient(s)\n"
- 				+ "-s Subject\n"
- 				+ "-b Mail body\n"
- 				+ "-f Mail body text file   [File used as mail text (overrides -b)]\n"
- 				+ "-i Configuration file    [Default is \"SendMail.ini\"]\n"
- 				+ "-a File(s)               [Attachment(s) (comma-separated)]\n"
- 				+ "-v                       [Log output on console]\n"
- 				+ "-t                       [Test run without sending mail, forces -v]\n"
- 				+ "-h                       [Show this text, ignores all other arguments]\n"
- 				+ "-enc Password            [Encrypt password, ignores all other arguments]\n\n"
+ 				+ "-r   Recipient(s)          [At least one recipient, separate with commas if more than one]\n"
+ 				+ "-rc  Recipient(s) CC       [Recipient(s) CC, separate with commas if more than one]\n"
+ 				+ "-rb  Recipient(s) BCC      [Recipient(s) BCC, separate with commas if more than one]\n"
+ 				+ "-s   Subject               [Subject text]\n"
+ 				+ "-b   Mail body             [Mail body text]\n"
+ 				+ "-f   Mail body text file   [File used as mail body (overrides -b)]\n"
+ 				+ "-i   Configuration file    [Default is \"SendMail.ini\"]\n"
+ 				+ "-a   File(s)               [Attachment(s), separate with commas if more than one]\n"
+ 				+ "-v                         [Log output on console]\n"
+ 				+ "-t                         [Test run without sending mail, forces -v]\n"
+ 				+ "-h                         [Show this text, ignores all other arguments]\n"
+ 				+ "-enc Password              [Encrypt password, ignores all other arguments]\n\n"
  				+ "All parameters are optional.\n\n"
  				+ "All parameters (except -v and -h) ​​can be defined in the configuration file, "
  				+ "in environment variables or as program arguments.\n"

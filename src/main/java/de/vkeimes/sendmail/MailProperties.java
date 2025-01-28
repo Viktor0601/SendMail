@@ -18,6 +18,8 @@ public class MailProperties {
 	private String bodyFile;
 	private String mimeType;
 	private String recipients;
+	private String recipientsCc;
+	private String recipientsBcc;
 	private String attachments;
 	
 	public String getHost() {
@@ -125,9 +127,29 @@ public class MailProperties {
 		this.recipients = recipients;
 	}
 	public String[] getRecipientsAsArray() {
-		return recipients.split(",");
+		return splitNoBlanks(recipients);
 	}
 
+	public String getRecipientsCc() {
+		return recipientsCc;
+	}
+	public void setRecipientsCc(String recipientsCc) {
+		this.recipientsCc = recipientsCc;
+	}
+	public String[] getRecipientsCcAsArray() {
+		return splitNoBlanks(recipientsCc);
+	}
+
+	public String getRecipientsBcc() {
+		return recipientsBcc;
+	}
+	public void setRecipientsBcc(String recipientsBcc) {
+		this.recipientsBcc = recipientsBcc;
+	}
+	public String[] getRecipientsBccAsArray() {
+		return splitNoBlanks(recipientsBcc);
+	}
+	
 	public String getAttachments() {
 		return attachments;
 	}
@@ -136,5 +158,24 @@ public class MailProperties {
 	}
 	public String[] getAttachmentsAsArray() {
 		return attachments.split(",");
+	}
+
+	private static String[] splitNoBlanks(String str) {
+		String[] all = str.split(",");
+		int anz = 0;
+		for (int i = 0; i < all.length; i++) {
+			if (!all[i].trim().isBlank()) {
+				anz++;
+			}
+		}
+		String[] ret = new String[anz];
+		anz = 0;
+		for (int i = 0; i < all.length; i++) {
+			if (!all[i].trim().isBlank()) {
+				ret[anz] = all[i].trim();
+				anz++;
+			}
+		}
+		return ret;
 	}
 }

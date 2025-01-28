@@ -53,12 +53,34 @@ public class Mailer {
             MimeMessage message = new MimeMessage(session);
 
             String[] recips = props.getRecipientsAsArray();
-            InternetAddress[] arrayInetAdress = new InternetAddress[recips.length];
+            InternetAddress[] recipsIA = new InternetAddress[recips.length];
             for (int i = 0; i < recips.length; i++) {
-                arrayInetAdress[i] = new InternetAddress(recips[i]);
+                recipsIA[i] = new InternetAddress(recips[i]);
+            }
+            message.setRecipients(Message.RecipientType.TO, recipsIA);
+
+            String[] recipsCc = props.getRecipientsCcAsArray();
+            InternetAddress[] recipsCcIA = new InternetAddress[recipsCc.length];
+            for (int i = 0; i < recipsCc.length; i++) {
+            	if (!recipsCc[i].isBlank()) {
+            		recipsCcIA[i] = new InternetAddress(recipsCc[i]);
+            	}
+            }
+            if (recipsCcIA != null) {
+                message.setRecipients(Message.RecipientType.CC, recipsCcIA);
+            }
+            
+            String[] recipsBcc = props.getRecipientsBccAsArray();
+            InternetAddress[] recipsBccIA = new InternetAddress[recipsBcc.length];
+            for (int i = 0; i < recipsBcc.length; i++) {
+            	if (!recipsBcc[i].isBlank()) {
+            		recipsBccIA[i] = new InternetAddress(recipsBcc[i]);
+            	}
+            }
+            if (recipsBccIA != null) {
+            	message.setRecipients(Message.RecipientType.BCC, recipsBccIA);
             }
 
-            message.setRecipients(Message.RecipientType.TO, arrayInetAdress);
             message.setFrom(new InternetAddress(props.getSender()));
             message.setSubject(props.getSubject());
             
