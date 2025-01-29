@@ -137,7 +137,6 @@ public class SendMail {
 		if (System.getenv(ATTACHEMENTS) != null) { props.setAttachments(System.getenv(ATTACHEMENTS)); }
 	}
 
-	// CmdLine -i funktioniert nicht richtig
 	/**
 	 * Ini-Filename aus Aufrufparametern einlesen
 	 */
