@@ -137,6 +137,7 @@ public class SendMail {
 		if (System.getenv(ATTACHEMENTS) != null) { props.setAttachments(System.getenv(ATTACHEMENTS)); }
 	}
 
+	// CmdLine -i funktioniert nicht richtig
 	/**
 	 * Ini-Filename aus Aufrufparametern einlesen
 	 */
@@ -178,6 +179,8 @@ public class SendMail {
 					testmode = true;
 				} else if (args[i].equals("-h")) {
 					usageAndEnd(0);
+				} else if (args[i].equals("-i")) {
+					i++; // do nothing, has already been read 
 				} else {
 					usageAndEnd(1);
 				}
@@ -206,7 +209,7 @@ public class SendMail {
 		}
 
 		// Protokollierung
-		log("Configuration file:  " + iniFilename);
+		log("Configuration file:  " + iniFilename + "(" + new File(iniFilename).getAbsolutePath() + ")");
 		log("Mail host:           " + props.getHost());
 		log("SMPT port:           " + props.getPort());
 		log("Authentication:      " + props.getAuth());

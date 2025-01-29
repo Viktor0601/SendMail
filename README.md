@@ -1,4 +1,4 @@
-# SendMail 2.4.0
+# SendMail 2.4.1
 Java command line Sendmail tool with many features
 - Wide range of configuration
 - Supports encrypted communication
